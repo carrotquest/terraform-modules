@@ -13,7 +13,7 @@ resource "google_compute_disk" "gcp_vm_boot" {
   count = var.gcp_vm_count
   zone  = var.gcp_vm_zones[count.index % length(var.gcp_vm_zones)]
 
-  name = "${var.gcp_vm_prefix}${format("%02d", count.index + 1)}${var.gcp_vm_boot_suffix}"
+  name = var.gcp_vm_boot_names ? var.gcp_vm_boot_names[count.index] : "${var.gcp_vm_prefix}${format("%02d", count.index + 1)}${var.gcp_vm_boot_suffix}"
 
   image                     = var.gcp_vm_boot_image != "" ? data.google_compute_image.boot_image.self_link : data.google_compute_image.boot_image_family.self_link
   physical_block_size_bytes = 4096
@@ -49,7 +49,7 @@ resource "google_compute_disk" "gcp_vm_attached" {
 resource "google_compute_address" "gcp_vm_internal_ip" {
   count = coalesce(var.gcp_vm_ip_base, 255) == 255 ? 0 : var.gcp_vm_count
 
-  name = "${var.gcp_vm_prefix}${format("%02d", count.index + 1)}-internal"
+  name = var.gcp_vm_ip_names ? var.gcp_vm_ip_names[count.index] : "${var.gcp_vm_prefix}${format("%02d", count.index + 1)}-internal"
 
   address      = "${var.gcp_project_ip_base}.${var.gcp_vm_ip_base + count.index + 1}"
   address_type = "INTERNAL"
