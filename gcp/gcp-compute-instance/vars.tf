@@ -41,7 +41,7 @@ variable "gcp_vm_boot_size" {
   default = 10
 }
 variable "gcp_vm_boot_names" {
-  default = []
+  default = null
 }
 variable "gcp_vm_boot_suffix" {
   default = "-system"
@@ -70,7 +70,7 @@ variable "gcp_vm_ip_base" {
   default = null
 }
 variable "gcp_vm_ip_names" {
-  default = []
+  default = null
 }
 variable "gcp_vm_machine_type" {
   default = "e2-small"
