@@ -49,7 +49,7 @@ resource "google_compute_disk" "gcp_vm_attached" {
 resource "google_compute_address" "gcp_vm_internal_ip" {
   count = coalesce(var.gcp_vm_ip_base, 255) == 255 ? 0 : var.gcp_vm_count
 
-  name = var.gcp_vm_boot_names != null ? var.gcp_vm_boot_names[count.index] : "${var.gcp_vm_prefix}${format("%02d", count.index + 1)}-internal"
+  name = var.gcp_vm_ip_names != null ? var.gcp_vm_ip_names[count.index] : "${var.gcp_vm_prefix}${format("%02d", count.index + 1)}-internal"
 
   address      = "${var.gcp_project_ip_base}.${var.gcp_vm_ip_base + count.index + 1}"
   address_type = "INTERNAL"
